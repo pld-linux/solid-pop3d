@@ -76,7 +76,7 @@ autoconf
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT%{_sysconfdir}/{pam.d,sysconfig/rc-inetd,security}
+install -d $RPM_BUILD_ROOT%{_sysconfdir}/{pam.d,sysconfig/rc-inetd,security} \
 	$RPM_BUILD_ROOT/var/mail/bulletins
 
 install %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/spop3d.conf
