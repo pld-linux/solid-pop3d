@@ -2,7 +2,7 @@
 # Conditional build:
 # _with_whoson - build with whoson support
 # _without_sasl - build without SASL support
-
+#
 Summary:	POP3 server
 Summary(pl):	Serwer POP3
 Name:		solid-pop3d
@@ -11,7 +11,6 @@ Release:	9
 License:	GPL
 Group:		Networking/Daemons
 Vendor:		Jerzy Balamut <jurekb@dione.ids.pl>
-URL:		http://solidpop3d.pld.org.pl/
 Source0:	ftp://dione.ids.pl/pub/solidpop3d/%{name}-%{version}.tar.gz
 # Source0-md5:	ad197a3cf8310994f2fad90376edbd91
 Source1:	%{name}.conf
@@ -21,6 +20,7 @@ Source4:	%{name}-ssl.inetd
 Source5:	%{name}.pamd
 Patch0:		%{name}-whoson2.patch
 Patch1:		%{name}-user.patch
+URL:		http://solidpop3d.pld.org.pl/
 BuildRequires:	autoconf
 %{?!_without_sasl:BuildRequires:	cyrus-sasl-devel < 2.0.0 }
 BuildRequires:	gdbm-devel
