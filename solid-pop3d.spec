@@ -113,7 +113,7 @@ fi
 
 if [ "$1" = "0" ]; then
 	if [ -n "`id -u spop3d 2>/dev/null`" ]; then
-		%{_bindir}/userdel spop3d
+		%{_sbindir}/userdel spop3d
 	fi
 fi
 
