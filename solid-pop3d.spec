@@ -95,8 +95,6 @@ install %{SOURCE3} $RPM_BUILD_ROOT%{_sysconfdir}/sysconfig/rc-inetd/spop3d
 install %{SOURCE4} $RPM_BUILD_ROOT%{_sysconfdir}/sysconfig/rc-inetd/spop3d-ssl
 install %{SOURCE5} $RPM_BUILD_ROOT%{_sysconfdir}/pam.d/spop3d
 
-gzip -9nf AUTHORS README THANKS VIRTUALS doc/config.example
-
 touch $RPM_BUILD_ROOT%{_sysconfdir}/security/blacklist.spop3d
 
 %clean
@@ -127,7 +125,7 @@ fi
 
 %files
 %defattr(644,root,root,755)
-%doc {AUTHORS,README,THANKS,VIRTUALS,doc/config.example}.gz
+%doc AUTHORS README THANKS VIRTUALS doc/config.example
 %attr(755,root,root) %{_sbindir}/*
 %attr(755,root,root) %{_bindir}/*
 %attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/sysconfig/rc-inetd/spop3d
