@@ -1,0 +1,10 @@
+SERVICE_NAME=pop3s
+SOCK_TYPE=stream
+PROTOCOL=tcp
+PORT=995
+FLAGS=nowait
+USER=root
+SERVER=tcpd
+FAMILY=ipv4
+DAEMON=/usr/sbin/stunnel
+DAEMONARGS="-p /var/lib/openssl/certs/imaps.pem -l /usr/lib/spop3d"
