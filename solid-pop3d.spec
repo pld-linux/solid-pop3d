@@ -10,9 +10,10 @@ Vendor:		Jerzy Balamut <jurekb@dione.ids.pl>
 URL:		http://solidpop3d.pld.org.pl/
 Source0:	ftp://dione.ids.pl/pub/solidpop3d/%{name}-%{version}.tar.gz
 Source1:	%{name}.conf
-Source2:	%{name}.inetd
-Source3:	%{name}-ssl.inetd
-Source4:	%{name}.pamd
+Source2:	%{name}-ssl.conf
+Source3:	%{name}.inetd
+Source4:	%{name}-ssl.inetd
+Source5:	%{name}.pamd
 Provides:	pop3daemon
 Prereq:		rc-inetd >= 0.8.1
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -78,9 +79,10 @@ rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT%{_sysconfdir}/{pam.d,sysconfig/rc-inetd,security}
 install -d $RPM_BUILD_ROOT/var/mail/bulletins
 install %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/spop3d.conf
-install %{SOURCE2} $RPM_BUILD_ROOT%{_sysconfdir}/sysconfig/rc-inetd/spop3d
-install %{SOURCE3} $RPM_BUILD_ROOT%{_sysconfdir}/sysconfig/rc-inetd/spop3d-ssl
-install %{SOURCE4} $RPM_BUILD_ROOT%{_sysconfdir}/pam.d/spop3d
+install %{SOURCE2} $RPM_BUILD_ROOT%{_sysconfdir}/spop3d-ssl.conf
+install %{SOURCE3} $RPM_BUILD_ROOT%{_sysconfdir}/sysconfig/rc-inetd/spop3d
+install %{SOURCE4} $RPM_BUILD_ROOT%{_sysconfdir}/sysconfig/rc-inetd/spop3d-ssl
+install %{SOURCE5} $RPM_BUILD_ROOT%{_sysconfdir}/pam.d/spop3d
 
 %{__make} install DESTDIR=$RPM_BUILD_ROOT 
 
@@ -128,5 +130,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/security/blacklist.spop3d
 %attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/pam.d/spop3d
 %attr(640,spop3d,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/spop3d.conf
+%attr(640,spop3d,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/spop3d-ssl.conf
 %attr(755,root,root) %dir /var/mail/bulletins
 %{_mandir}/man[158]/*
