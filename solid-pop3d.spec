@@ -26,7 +26,7 @@ Obsoletes:	qpopper6
 Obsoletes:	imap-pop
 Obsoletes:	solid-pop3d-ssl
 BuildRequires:	gdbm-devel
-BuildRequires:	openssl-devel >= 0.9.6a
+BuildRequires:	openssl-devel >= 0.9.6m
 BuildRequires:	autoconf
 %{?_with_whoson:BuildRequires: whoson-devel}
 %define		_sysconfdir	/etc
