@@ -43,17 +43,6 @@ konfigurowalny oraz posiada wsparcie dla wielu nowinek takich jak:
 - obs³uga biuletynów
 - obs³uga przeterminowywania siê wiadomo¶ci
 
-%package ssl
-Summary:	POP3 server with SSL wrapper
-Summary(pl):	Serwer POP3 z
-Group:		Networking/Daemons
-Group(pl):	Sieciowe/Serwery
-Requires:	%{name} = %{version}
-Requires:	stunnel
-
-%description ssl
-POP3 server with SSL wrapper.
-
 %prep
 %setup -q
 
@@ -126,18 +115,6 @@ if [ "$1" = "0" ]; then
 	fi
 fi
 
-%post ssl
-if [ -f /var/lock/subsys/rc-inetd ]; then
-	/etc/rc.d/init.d/rc-inetd reload 1>&2
-else
-	echo "Type \"/etc/rc.d/init.d/rc-inetd start\" to start inet sever" 1>&2
-fi
-
-%postun ssl
-if [ -f /var/lock/subsys/rc-inetd ]; then
-	/etc/rc.d/init.d/rc-inetd reload 1>&2
-fi
-
 %clean
 rm -rf $RPM_BUILD_ROOT
 
@@ -147,12 +124,9 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_sbindir}/*
 %attr(755,root,root) %{_bindir}/*
 %attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/sysconfig/rc-inetd/spop3d
+%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/sysconfig/rc-inetd/spop3d-ssl
 %attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/security/blacklist.spop3d
 %attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/pam.d/spop3d
 %attr(640,spop3d,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/spop3d.conf
 %attr(755,root,root) %dir /var/mail/bulletins
 %{_mandir}/man[158]/*
-
-%files ssl
-%defattr(644,root,root,755)
-%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/sysconfig/rc-inetd/spop3d-ssl
