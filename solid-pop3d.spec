@@ -61,7 +61,7 @@ LDFLAGS="-s"; export LDFLAGS
 	--enable-last \
 	--enable-createmail \
 	--enable-ipv6
-make
+%{__make}
 
 %install
 rm -rf $RPM_BUILD_ROOT
