@@ -7,7 +7,7 @@ Summary:	POP3 server
 Summary(pl):	Serwer POP3
 Name:		solid-pop3d
 Version:	0.16d
-Release:	8
+Release:	9
 License:	GPL
 Group:		Networking/Daemons
 Vendor:		Jerzy Balamut <jurekb@dione.ids.pl>
