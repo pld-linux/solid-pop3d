@@ -1,5 +1,7 @@
+#
 # Conditional build:
-# _with_whoson - build wiht whoson support
+# _with_whoson - build with whoson support
+# _without_sasl - build without SASL support
 
 Summary:	POP3 server
 Summary(pl):	Serwer POP3
@@ -28,6 +30,7 @@ Obsoletes:	solid-pop3d-ssl
 BuildRequires:	gdbm-devel
 BuildRequires:	openssl-devel >= 0.9.6a
 BuildRequires:	autoconf
+%{?!_without_sasl:BuildRequires: cyrus-sasl-devel < 2.0.0 }
 %{?_with_whoson:BuildRequires: whoson-devel}
 %define		_sysconfdir	/etc
 
@@ -79,7 +82,7 @@ konfigurowalny oraz posiada wsparcie dla wielu nowinek takich jak:
 	--enable-authonly \
 	--with-openssl \
 	%{?_with_whoson: --enable-whoson} \
-	--with-sasl
+	%{!?_without_sasl: --with-sasl}
 %{__make}
 
 %install
