@@ -56,7 +56,7 @@ konfigurowalny oraz posiada wsparcie dla wielu nowinek takich jak:
 %{?_with_whoson:%patch0 -p1}
 %build
 autoheader
-autoconf
+%{__autoconf}
 %configure \
 	--localstatedir=/var/mail \
 	--enable-apop \
