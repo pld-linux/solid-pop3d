@@ -1,12 +1,13 @@
 Summary:	POP3 server
 Summary(pl):	Serwer POP3
 Name:		solid-pop3d
-Version:	0.14
-Release:	4
+Version:	0.15
+Release:	1
 License:	GPL
 Group:		Networking/Daemons
 Group(pl):	Sieciowe/Serwery
 Vendor:		Jerzy Balamut <jurekb@dione.ids.pl>
+URL:		http://solidpop3d.pld.org.pl/
 Source0:	ftp://dione.ids.pl/pub/solidpop3d/%{name}-%{version}.tar.gz
 Source1:	%{name}.conf
 Source2:	%{name}.inetd
@@ -80,9 +81,9 @@ touch $RPM_BUILD_ROOT%{_sysconfdir}/security/blacklist.spop3d
 
 %pre
 if [ -z "`id -u spop3d 2>/dev/null`" ]; then
-	/usr/sbin/useradd -u 70 -r -d /var/mail/bulletins -s /bin/false -c "Solid POP3 User" -g nobody spop3d 1>&2
+	%{_sbindir}/useradd -u 70 -r -d /var/mail/bulletins -s /bin/false -c "Solid POP3 User" -g nobody spop3d 1>&2
 	if [ -f /var/db/passwd.db ]; then
-		/usr/bin/update-db 1>&2
+		%{_bindir}/update-db 1>&2
 	fi
 fi
 
@@ -100,7 +101,7 @@ fi
 
 if [ "$1" = "0" ]; then
 	if [ -n "`id -u spop3d 2>/dev/null`" ]; then
-		/usr/sbin/userdel spop3d
+		%{_bindir}/userdel spop3d
 	fi
 fi
 
