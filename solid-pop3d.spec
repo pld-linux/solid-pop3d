@@ -95,5 +95,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/sysconfig/rc-inetd/spop3d
 %attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/security/blacklist.spop3d
 %attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/pam.d/spop3d
+%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/spop3d.conf
 %attr(755,root,root) %dir /var/mail/bulletins
 %{_mandir}/man[158]/*
