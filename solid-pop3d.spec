@@ -20,7 +20,7 @@ Obsoletes:	qpopper6
 Obsoletes:	imap-pop
 Prereq:		rc-inetd >= 0.8.1
 
-%define _sysconfdir	/etc
+%define		_sysconfdir	/etc
 
 %description
 The Solid POP3 Server is an implementation of a Post Office Protocol
@@ -64,7 +64,7 @@ LDFLAGS="-s"; export LDFLAGS
 make
 
 %install
-rm -rf	$RPM_BUILD_ROOT
+rm -rf $RPM_BUILD_ROOT
 
 install -d $RPM_BUILD_ROOT%{_sysconfdir}/{pam.d,sysconfig/rc-inetd,security}
 install -d $RPM_BUILD_ROOT/var/mail/bulletins
