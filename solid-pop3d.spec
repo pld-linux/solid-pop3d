@@ -58,7 +58,7 @@ konfigurowalny oraz posiada wsparcie dla wielu nowinek takich jak:
 
 %prep
 %setup -q
-%{?_with_whoson:%patch0 -p1}
+%{?with_whoson:%patch0 -p1}
 %patch1 -p1
 
 %build
