@@ -1,8 +1,8 @@
 Summary:	POP3 server
 Summary(pl):	Serwer POP3
 Name:		solid-pop3d
-Version:	0.15
-Release:	3
+Version:	0.16c
+Release:	1
 License:	GPL
 Group:		Networking/Daemons
 Group(pl):	Sieciowe/Serwery
@@ -72,7 +72,15 @@ LDFLAGS="-s"; export LDFLAGS
 	--enable-userconfig \
 	--enable-last \
 	--enable-createmail \
-	--enable-ipv6
+	--enable-ipv6 \
+	--enable-mapping \
+	--enable-nonip \
+	--enable-statistics \
+	--enable-dpuid \
+	--enable-logextend \
+	--enable-userpasswd \
+	--with-openssl \
+	--with-sasl
 %{__make}
 
 %install
@@ -136,8 +144,8 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc {AUTHORS,README,THANKS,VIRTUALS,doc/config.example}.gz
-%attr(755,root,root) %{_sbindir}/spop3d
-%attr(755,root,root) %{_bindir}/pop_auth
+%attr(755,root,root) %{_sbindir}/*
+%attr(755,root,root) %{_bindir}/*
 %attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/sysconfig/rc-inetd/spop3d
 %attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/security/blacklist.spop3d
 %attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/pam.d/spop3d
