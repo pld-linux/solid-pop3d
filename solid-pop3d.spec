@@ -13,13 +13,13 @@ Source1:	%{name}.conf
 Source2:	%{name}.inetd
 Source3:	%{name}-ssl.inetd
 Source4:	%{name}.pamd
-BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Provides:	pop3daemon
+Prereq:		rc-inetd >= 0.8.1
+BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Obsoletes:	pop3daemon
 Obsoletes:	qpopper
 Obsoletes:	qpopper6
 Obsoletes:	imap-pop
-Prereq:		rc-inetd >= 0.8.1
 
 %define		_sysconfdir	/etc
 
