@@ -93,7 +93,7 @@ install %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/spop3d.conf
 install %{SOURCE2} $RPM_BUILD_ROOT%{_sysconfdir}/spop3d-ssl.conf
 install %{SOURCE3} $RPM_BUILD_ROOT/etc/sysconfig/rc-inetd/spop3d
 install %{SOURCE4} $RPM_BUILD_ROOT/etc/sysconfig/rc-inetd/spop3d-ssl
-install %{SOURCE5} $RPM_BUILD_ROOT%{_sysconfdir}/pam.d/spop3d
+install %{SOURCE5} $RPM_BUILD_ROOT/etc/pam.d/spop3d
 
 touch $RPM_BUILD_ROOT%{_sysconfdir}/security/blacklist.spop3d
 
@@ -131,7 +131,7 @@ fi
 %attr(640,root,root) %config(noreplace) %verify(not size mtime md5) /etc/sysconfig/rc-inetd/spop3d
 %attr(640,root,root) %config(noreplace) %verify(not size mtime md5) /etc/sysconfig/rc-inetd/spop3d-ssl
 %attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/security/blacklist.spop3d
-%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/pam.d/spop3d
+%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) /etc/pam.d/spop3d
 %attr(640,spop3d,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/spop3d.conf
 %attr(640,spop3d,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/spop3d-ssl.conf
 %attr(755,root,root) %dir /var/mail/bulletins
