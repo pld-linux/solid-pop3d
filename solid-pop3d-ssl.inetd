@@ -7,3 +7,4 @@ USER=root
 SERVER=tcpd
 FAMILY=ipv4
 DAEMON=/usr/sbin/spop3d
+DAEMONARGS="-f /etc/spop3d-ssl.conf"
