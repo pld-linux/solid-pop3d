@@ -1,0 +1,113 @@
+diff -uNr solid-pop3d-0.16d_org/acconfig.h solid-pop3d-0.16d/acconfig.h
+--- solid-pop3d-0.16d_org/acconfig.h	Sun Apr 22 01:30:32 2001
++++ solid-pop3d-0.16d/acconfig.h	Thu Aug 30 16:53:36 2001
+@@ -89,6 +89,9 @@
+ /* Define if you want to have support for statistics */
+ #undef STATISTICS
+ 
++/* Include whoson support */
++#undef  HAVE_WHOSON
++
+ /* Define if you want to have support for SASL */
+ #undef SPSASL
+ 
+diff -uNr solid-pop3d-0.16d_org/configure.in solid-pop3d-0.16d/configure.in
+--- solid-pop3d-0.16d_org/configure.in	Sun Apr 22 05:43:44 2001
++++ solid-pop3d-0.16d/configure.in	Thu Aug 30 16:53:36 2001
+@@ -562,6 +562,28 @@
+ 	] )
+ AC_SUBST(HASHSPOOL_O)
+ 
++AC_MSG_CHECKING(whether to add support for whoson)
++AC_ARG_ENABLE(whoson,
++       [  --enable-whoson=DIR     compile server with whoson support], [
++               if test "$enableval" = "no"; then
++                       AC_MSG_RESULT(no)
++               else
++                       AC_MSG_RESULT(yes)
++                       AC_DEFINE_UNQUOTED(HAVE_WHOSON,1)
++                       WHOSONLIB="-lwhoson"
++                       AC_SUBST(WHOSONLIB)
++                       if test "$enableval" != "yes" ; then
++                               WHOSONINC="-I$enableval/include"
++                       else
++                               WHOSONINC="-I/usr/local/whoson/include"
++                       fi
++                       AC_SUBST(WHOSONINC)
++               fi
++       ], [
++       AC_MSG_RESULT(no)
++       ] )
++
++
+ dnl Check for OpenSSL - mostly ripped from CMU Cyrus IMAP Server
+ SPTLS_O=""
+ 
+diff -uNr solid-pop3d-0.16d_org/src/Makefile.in solid-pop3d-0.16d/src/Makefile.in
+--- solid-pop3d-0.16d_org/src/Makefile.in	Fri Sep 22 11:59:18 2000
++++ solid-pop3d-0.16d/src/Makefile.in	Thu Aug 30 16:53:36 2001
+@@ -44,6 +44,8 @@
+ APOP_O = @APOP_O@
+ STANDALONE_O = @STANDALONE_O@
+ SPOPLIBS = @SPOPLIBS@
++WHOSONLIB = @WHOSONLIB@
++WHOSONINC = @WHOSONINC@
+ CC = @CC@
+ CONFIGFILE_O = @CONFIGFILE_O@
+ MAILBOX_O = @MAILBOX_O@
+@@ -89,7 +91,7 @@
+ 
+ spop3d_LDADD = @APOP_O@ @MAILBOX_O@ @MAILDIR_O@ @CRLFMAILDIR_O@ @USERCONFIG_O@ \
+ @CONFIGFILE_O@ @STANDALONE_O@ @MAPPING_O@ @BULLETINS_O@ @SPSASL_O@ @SPTLS_O@ \
+-@MYDBM_O@ @MD5_CRYPT_O@ @HASHSPOOL_O@ @SPOPLIBS@
++@MYDBM_O@ @MD5_CRYPT_O@ @HASHSPOOL_O@ @SPOPLIBS@ @WHOSONLIB@
+ 
+ into_crlfmaildir_SOURCES = into_crlfmaildir.c vsnprintf.c
+ into_crlfmaildir_DEPENDENCIES = into_crlfmaildir.o vsnprintf.o
+@@ -113,7 +115,7 @@
+ 
+ 
+ DEFS = @DEFS@ -DDEFCONFIGFILENAME=\"$(sysconfdir)/spop3d.conf\" \
+--DBULLDIR=\"$(localstatedir)/bulletins/\" -I. -I$(srcdir) -I..
++-DBULLDIR=\"$(localstatedir)/bulletins/\" -I. -I$(srcdir) -I.. @WHOSONINC@
+ LDFLAGS = @LDFLAGS@
+ LIBS = @LIBS@
+ pop_passwd_OBJECTS = pop_passwd.o md5.o md5_crypt.o fdfgets.o vsnprintf.o
+diff -uNr solid-pop3d-0.16d_org/src/main.c solid-pop3d-0.16d/src/main.c
+--- solid-pop3d-0.16d_org/src/main.c	Sun Apr 22 10:57:09 2001
++++ solid-pop3d-0.16d/src/main.c	Thu Aug 30 16:56:36 2001
+@@ -17,7 +17,9 @@
+  *  along with this program; if not, write to the Free Software
+  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+  */
+-
++#ifdef HAVE_WHOSON
++#include "whoson.h"
++#endif
+ #include "includes.h"
+ #ifdef TIME_WITH_SYS_TIME
+ # include <sys/time.h>
+@@ -716,7 +718,11 @@
+ #else
+ int main(int argc, char **argv)
+ #endif
+-{
++{		
++#ifdef HAVE_WHOSON
++       char buf[128];
++#endif
++
+ 	const struct s_cmd *act_cmd;
+ #ifdef SPIPV6
+ 	union sp_sockaddr peeraddr;
+@@ -1187,6 +1193,10 @@
+ 	}
+ 	memset(sasl_secret, 0, sizeof(sasl_secret));
+ #endif /* SASL */
++#ifdef HAVE_WHOSON
++       /* Notify whoson server the user has loged in correctly */
++       wso_login(ahname,username,buf,sizeof(buf));
++#endif
+ 	memset(password, 0, strlen(password));
+ 	close(tunnel[0]);
+ 	tunnel[0] = -1;
