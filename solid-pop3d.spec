@@ -25,16 +25,18 @@ BuildRequires:	autoconf
 %{?with_sasl:BuildRequires:	cyrus-sasl-devel < 2.0.0}
 BuildRequires:	gdbm-devel
 %{?with_ssl:BuildRequires:	openssl-devel >= 0.9.7d}
+BuildRequires:	rpmbuild(macros) >= 1.159
 %{?with_whoson:BuildRequires:	whoson-devel}
 PreReq:		rc-inetd >= 0.8.1
 Requires:	pam >= 0.77.3
 Provides:	pop3daemon
-BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
+Provides:	user(pop3)
+Obsoletes:	imap-pop
 Obsoletes:	pop3daemon
 Obsoletes:	qpopper
 Obsoletes:	qpopper6
-Obsoletes:	imap-pop
 Obsoletes:	solid-pop3d-ssl
+BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
 The Solid POP3 Server is an implementation of a Post Office Protocol
@@ -126,14 +128,12 @@ if [ -f /var/lock/subsys/rc-inetd ]; then
 fi
 
 if [ "$1" = "0" ]; then
-	if [ -n "`id -u pop3 2>/dev/null`" ]; then
-		/usr/sbin/userdel pop3
-	fi
+	%userremove pop3
 fi
 
 %triggerpostun -- solid-pop3d < 0.16d-8
 if [ "$1" != "0" ]; then
-	/usr/sbin/userdel spop3d
+	%userremove spop3d
 fi
 
 %files
