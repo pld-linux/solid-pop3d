@@ -28,7 +28,7 @@ Obsoletes:	qpopper6
 Obsoletes:	imap-pop
 Obsoletes:	solid-pop3d-ssl
 BuildRequires:	gdbm-devel
-BuildRequires:	openssl-devel >= 0.9.6a
+BuildRequires:	openssl-devel >= 0.9.7
 BuildRequires:	autoconf
 %{?!_without_sasl:BuildRequires: cyrus-sasl-devel < 2.0.0 }
 %{?_with_whoson:BuildRequires: whoson-devel}
