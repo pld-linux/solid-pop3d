@@ -7,7 +7,7 @@ Summary:	POP3 server
 Summary(pl):	Serwer POP3
 Name:		solid-pop3d
 Version:	0.16d
-Release:	7
+Release:	8
 License:	GPL
 Group:		Networking/Daemons
 Vendor:		Jerzy Balamut <jurekb@dione.ids.pl>
@@ -19,6 +19,7 @@ Source3:	%{name}.inetd
 Source4:	%{name}-ssl.inetd
 Source5:	%{name}.pamd
 Patch0:		%{name}-whoson2.patch
+Patch1:		%{name}-user.patch
 Provides:	pop3daemon
 Prereq:		rc-inetd >= 0.8.1
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -57,6 +58,8 @@ konfigurowalny oraz posiada wsparcie dla wielu nowinek takich jak:
 %prep
 %setup -q
 %{?_with_whoson:%patch0 -p1}
+%patch1 -p1
+
 %build
 %{__autoheader}
 %{__autoconf}
@@ -104,8 +107,8 @@ touch $RPM_BUILD_ROOT%{_sysconfdir}/security/blacklist.spop3d
 rm -rf $RPM_BUILD_ROOT
 
 %pre
-if [ -z "`id -u spop3d 2>/dev/null`" ]; then
-	%{_sbindir}/useradd -u 70 -r -d /var/mail/bulletins -s /bin/false -c "Solid POP3 User" -g nobody spop3d 1>&2
+if [ -z "`id -u pop3 2>/dev/null`" ]; then
+	%{_sbindir}/useradd -u 60 -r -d /var/mail/bulletins -s /bin/false -c "pop3 user" -g nobody pop3 1>&2
 fi
 
 %post
@@ -121,10 +124,16 @@ if [ -f /var/lock/subsys/rc-inetd ]; then
 fi
 
 if [ "$1" = "0" ]; then
-	if [ -n "`id -u spop3d 2>/dev/null`" ]; then
-		%{_sbindir}/userdel spop3d
+	if [ -n "`id -u pop3 2>/dev/null`" ]; then
+		%{_sbindir}/userdel pop3
 	fi
 fi
+
+%triggerpostun -- solid-pop3d < 0.16d-8
+if [ "$1" != "0" ]; then
+	%{_sbindir}/userdel spop3d
+fi
+
 
 %files
 %defattr(644,root,root,755)
