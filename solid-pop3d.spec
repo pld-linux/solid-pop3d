@@ -55,7 +55,7 @@ konfigurowalny oraz posiada wsparcie dla wielu nowinek takich jak:
 %setup -q
 %{?_with_whoson:%patch0 -p1}
 %build
-autoheader
+%{__autoheader}
 %{__autoconf}
 %configure \
 	--localstatedir=/var/mail \
