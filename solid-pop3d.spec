@@ -27,6 +27,7 @@ BuildRequires:	gdbm-devel
 BuildRequires:	openssl-devel >= 0.9.7
 %{?_with_whoson:BuildRequires:	whoson-devel}
 PreReq:		rc-inetd >= 0.8.1
+Requires:	pam >= 0.77.3
 Provides:	pop3daemon
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Obsoletes:	pop3daemon
