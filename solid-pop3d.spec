@@ -49,7 +49,7 @@ Summary(pl):	Serwer POP3 z
 Group:		Networking/Daemons
 Group(pl):	Sieciowe/Serwery
 Requires:	%{name} = %{version}
-Requires:	stunel
+Requires:	stunnel
 
 %description ssl
 POP3 server with SSL wrapper.
