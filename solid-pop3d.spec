@@ -147,4 +147,4 @@ rm -rf $RPM_BUILD_ROOT
 
 %files ssl
 %defattr(644,root,root,755)
-%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/sysconfig/rc-inetd/spop3d
+%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/sysconfig/rc-inetd/spop3d-ssl
