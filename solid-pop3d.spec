@@ -2,7 +2,7 @@ Summary:	POP3 server
 Summary(pl):	Serwer POP3
 Name:		solid-pop3d
 Version:	0.14
-Release:	3
+Release:	4
 License:	GPL
 Group:		Networking/Daemons
 Group(pl):	Sieciowe/Serwery
