@@ -32,8 +32,8 @@ Obsoletes:	solid-pop3d-ssl
 BuildRequires:	gdbm-devel
 BuildRequires:	openssl-devel >= 0.9.7
 BuildRequires:	autoconf
-%{?!_without_sasl:BuildRequires: cyrus-sasl-devel < 2.0.0 }
-%{?_with_whoson:BuildRequires: whoson-devel}
+%{?!_without_sasl:BuildRequires:	cyrus-sasl-devel < 2.0.0 }
+%{?_with_whoson:BuildRequires:	whoson-devel}
 %define		_sysconfdir	/etc
 
 %description
@@ -85,8 +85,8 @@ konfigurowalny oraz posiada wsparcie dla wielu nowinek takich jak:
 	--enable-userpasswd \
 	--enable-authonly \
 	--with-openssl \
-	%{?_with_whoson: --enable-whoson} \
-	%{!?_without_sasl: --with-sasl}
+	%{?_with_whoson:--enable-whoson} \
+	%{!?_without_sasl:--with-sasl}
 %{__make}
 
 %install
