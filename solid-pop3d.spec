@@ -145,7 +145,7 @@ fi
 %attr(640,root,root) %config(noreplace) %verify(not size mtime md5) /etc/sysconfig/rc-inetd/spop3d-ssl
 %attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/security/blacklist.spop3d
 %attr(640,root,root) %config(noreplace) %verify(not size mtime md5) /etc/pam.d/spop3d
-%attr(640,spop3d,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/spop3d.conf
-%attr(640,spop3d,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/spop3d-ssl.conf
+%attr(640,pop3,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/spop3d.conf
+%attr(640,pop3,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/spop3d-ssl.conf
 %attr(755,root,root) %dir /var/mail/bulletins
 %{_mandir}/man[158]/*
