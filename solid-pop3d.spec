@@ -1,7 +1,8 @@
 #
 # Conditional build:
-# _with_whoson - build with whoson support
-# _without_sasl - build without SASL support
+%bcond_with	whoson  # build with whoson support
+%bcond_without  sasl	# build without SASL support
+%bcond_without	ssl	# build without SSL support
 #
 Summary:	POP3 server
 Summary(pl):	Serwer POP3
@@ -21,10 +22,10 @@ Source5:	%{name}.pamd
 Patch0:		%{name}-whoson2.patch
 Patch1:		%{name}-user.patch
 BuildRequires:	autoconf
-%{?!_without_sasl:BuildRequires:	cyrus-sasl-devel < 2.0.0 }
+%{?with_sasl:BuildRequires:	cyrus-sasl-devel < 2.0.0}
 BuildRequires:	gdbm-devel
-BuildRequires:	openssl-devel >= 0.9.7c
-%{?_with_whoson:BuildRequires:	whoson-devel}
+%{?with_ssl:BuildRequires:	openssl-devel >= 0.9.7c}
+%{?with_whoson:BuildRequires:	whoson-devel}
 PreReq:		rc-inetd >= 0.8.1
 Requires:	pam >= 0.77.3
 Provides:	pop3daemon
@@ -83,9 +84,9 @@ konfigurowalny oraz posiada wsparcie dla wielu nowinek takich jak:
 	--enable-logextend \
 	--enable-userpasswd \
 	--enable-authonly \
-	--with-openssl \
-	%{?_with_whoson:--enable-whoson} \
-	%{!?_without_sasl:--with-sasl}
+	%{?with_ssl:--with-openssl} \
+	%{?with_whoson:--enable-whoson} \
+	%{?with_sasl:--with-sasl}
 %{__make}
 
 %install
