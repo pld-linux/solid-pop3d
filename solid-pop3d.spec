@@ -2,7 +2,7 @@ Summary:	POP3 server
 Summary(pl):	Serwer POP3
 Name:		solid-pop3d
 Version:	0.15
-Release:	1
+Release:	2
 License:	GPL
 Group:		Networking/Daemons
 Group(pl):	Sieciowe/Serwery
@@ -11,7 +11,8 @@ URL:		http://solidpop3d.pld.org.pl/
 Source0:	ftp://dione.ids.pl/pub/solidpop3d/%{name}-%{version}.tar.gz
 Source1:	%{name}.conf
 Source2:	%{name}.inetd
-Source3:	%{name}.pamd
+Source3:	%{name}-ssl.inetd
+Source4:	%{name}.pamd
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Provides:	pop3daemon
 Obsoletes:	pop3daemon
@@ -42,6 +43,17 @@ konfigurowalny oraz posiada wsparcie dla wielu nowinek takich jak:
 - obs³uga biuletynów
 - obs³uga przeterminowywania siê wiadomo¶ci
 
+%package ssl
+Summary:	POP3 server with SSL wrapper
+Summary(pl):	Serwer POP3 z
+Group:		Networking/Daemons
+Group(pl):	Sieciowe/Serwery
+Requires:	%{name} = %{version}
+Requires:	stunel
+
+%description ssl
+POP3 server with SSL wrapper.
+
 %prep
 %setup -q
 
@@ -70,7 +82,8 @@ install -d $RPM_BUILD_ROOT%{_sysconfdir}/{pam.d,sysconfig/rc-inetd,security}
 install -d $RPM_BUILD_ROOT/var/mail/bulletins
 install %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/spop3d.conf
 install %{SOURCE2} $RPM_BUILD_ROOT%{_sysconfdir}/sysconfig/rc-inetd/spop3d
-install %{SOURCE3} $RPM_BUILD_ROOT%{_sysconfdir}/pam.d/spop3d
+install %{SOURCE3} $RPM_BUILD_ROOT%{_sysconfdir}/sysconfig/rc-inetd/spop3d-ssl
+install %{SOURCE4} $RPM_BUILD_ROOT%{_sysconfdir}/pam.d/spop3d
 
 %{__make} install DESTDIR=$RPM_BUILD_ROOT 
 
@@ -105,6 +118,18 @@ if [ "$1" = "0" ]; then
 	fi
 fi
 
+%post ssl
+if [ -f /var/lock/subsys/rc-inetd ]; then
+	/etc/rc.d/init.d/rc-inetd reload 1>&2
+else
+	echo "Type \"/etc/rc.d/init.d/rc-inetd start\" to start inet sever" 1>&2
+fi
+
+%postun ssl
+if [ -f /var/lock/subsys/rc-inetd ]; then
+	/etc/rc.d/init.d/rc-inetd reload 1>&2
+fi
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
@@ -119,3 +144,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(640,spop3d,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/spop3d.conf
 %attr(755,root,root) %dir /var/mail/bulletins
 %{_mandir}/man[158]/*
+
+%files ssl
+%defattr(644,root,root,755)
+%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/sysconfig/rc-inetd/spop3d
