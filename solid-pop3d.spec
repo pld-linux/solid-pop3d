@@ -1,14 +1,14 @@
 #
 # Conditional build:
 %bcond_with	whoson  # build with whoson support
-%bcond_without  sasl	# build without SASL support
+%bcond_with     sasl	# build without SASL support
 %bcond_without	ssl	# build without SSL support
 #
 Summary:	POP3 server
 Summary(pl):	Serwer POP3
 Name:		solid-pop3d
 Version:	0.16d
-Release:	9
+Release:	10
 License:	GPL
 Group:		Networking/Daemons
 Vendor:		Jerzy Balamut <jurekb@dione.ids.pl>
