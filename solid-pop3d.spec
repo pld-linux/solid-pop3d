@@ -20,7 +20,6 @@ Source4:	%{name}-ssl.inetd
 Source5:	%{name}.pamd
 Patch0:		%{name}-whoson2.patch
 Patch1:		%{name}-user.patch
-URL:		http://solidpop3d.pld.org.pl/
 BuildRequires:	autoconf
 %{?!_without_sasl:BuildRequires:	cyrus-sasl-devel < 2.0.0 }
 BuildRequires:	gdbm-devel
