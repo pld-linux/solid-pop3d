@@ -8,8 +8,6 @@ Version:	0.16d
 Release:	6
 License:	GPL
 Group:		Networking/Daemons
-Group(de):	Netzwerkwesen/Server
-Group(pl):	Sieciowe/Serwery
 Vendor:		Jerzy Balamut <jurekb@dione.ids.pl>
 URL:		http://solidpop3d.pld.org.pl/
 Source0:	ftp://dione.ids.pl/pub/solidpop3d/%{name}-%{version}.tar.gz
