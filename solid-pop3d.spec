@@ -1,3 +1,6 @@
+# Conditional build:
+# _with_whoson - build wiht whoson support
+
 Summary:	POP3 server
 Summary(pl):	Serwer POP3
 Name:		solid-pop3d
@@ -15,6 +18,7 @@ Source2:	%{name}-ssl.conf
 Source3:	%{name}.inetd
 Source4:	%{name}-ssl.inetd
 Source5:	%{name}.pamd
+Patch0:		%{name}-whoson2.patch
 Provides:	pop3daemon
 Prereq:		rc-inetd >= 0.8.1
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -25,7 +29,7 @@ Obsoletes:	imap-pop
 Obsoletes:	solid-pop3d-ssl
 BuildRequires:	gdbm-devel
 BuildRequires:	openssl-devel >= 0.9.6a
-
+%{?_with_whoson:BuildRequires: whoson-devel}
 %define		_sysconfdir	/etc
 
 %description
@@ -50,8 +54,9 @@ konfigurowalny oraz posiada wsparcie dla wielu nowinek takich jak:
 
 %prep
 %setup -q
-
+%{?_with_whoson:%patch0 -p1}
 %build
+autoconf
 %configure \
 	--localstatedir=/var/mail \
 	--enable-apop \
@@ -73,6 +78,7 @@ konfigurowalny oraz posiada wsparcie dla wielu nowinek takich jak:
 	--enable-userpasswd \
 	--enable-authonly \
 	--with-openssl \
+	%{?_with_whoson: --enable-whoson} \
 	--with-sasl
 %{__make}
 
