@@ -24,7 +24,7 @@ Patch1:		%{name}-user.patch
 BuildRequires:	autoconf
 %{?!_without_sasl:BuildRequires:	cyrus-sasl-devel < 2.0.0 }
 BuildRequires:	gdbm-devel
-BuildRequires:	openssl-devel >= 0.9.7
+BuildRequires:	openssl-devel >= 0.9.7c
 %{?_with_whoson:BuildRequires:	whoson-devel}
 PreReq:		rc-inetd >= 0.8.1
 Requires:	pam >= 0.77.3
