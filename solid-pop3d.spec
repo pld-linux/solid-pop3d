@@ -5,7 +5,7 @@ Summary:	POP3 server
 Summary(pl):	Serwer POP3
 Name:		solid-pop3d
 Version:	0.16d
-Release:	5
+Release:	6
 License:	GPL
 Group:		Networking/Daemons
 Group(de):	Netzwerkwesen/Server
@@ -56,6 +56,7 @@ konfigurowalny oraz posiada wsparcie dla wielu nowinek takich jak:
 %setup -q
 %{?_with_whoson:%patch0 -p1}
 %build
+autoheader
 autoconf
 %configure \
 	--localstatedir=/var/mail \
