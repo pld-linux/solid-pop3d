@@ -1,7 +1,7 @@
 #
 # Conditional build:
 %bcond_with	whoson  # build with whoson support
-%bcond_with     sasl	# build without SASL support
+%bcond_with     sasl	# build with SASL support (uses obsolete cyrus-sasl 1.x)
 %bcond_without	ssl	# build without SSL support
 #
 Summary:	POP3 server
