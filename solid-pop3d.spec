@@ -1,3 +1,4 @@
+Summary:	POP3 server
 Summary(pl):	Serwer POP3
 Name:		solid-pop3d
 Version:	0.12
@@ -5,13 +6,15 @@ Release:	1
 License:	GPL
 Group:		Networking/Daemons
 Group(pl):	Sieciowe/Serwery
+Vendor:		Jerzy Balamut <jurekb@dione.ids.pl>
 Source:		ftp://dione.ids.pl/pub/solidpop3d/%{name}-%{version}.tar.gz
 Source1:	%{name}.conf
 Source2:	%{name}.inetd
 Source3:	%{name}.pamd
-Vendor:		Jerzy Balamut <jurekb@dione.ids.pl>
 Buildroot:	/tmp/%{name}-%{version}-root
-Prereq:		rc-inetd
+Prereq:		rc-inetd >= 0.8.1
+
+%define _sysconfdir	/etc
 
 %description
 The Solid POP3 Server is an implementation of a Post Office Protocol
@@ -35,8 +38,6 @@ konfigurowalny oraz posiada wsparcie dla wielu nowinek takich jak:
 
 %prep
 %setup -q
-
-%define _sysconfdir	/etc
 
 %build
 autoconf
@@ -64,8 +65,7 @@ install %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/spop3d.conf
 install %{SOURCE2} $RPM_BUILD_ROOT%{_sysconfdir}/sysconfig/rc-inetd/spop3d
 install %{SOURCE3} $RPM_BUILD_ROOT%{_sysconfdir}/pam.d/spop3d
 
-make install  \
-	DESTDIR=$RPM_BUILD_ROOT 
+make install DESTDIR=$RPM_BUILD_ROOT 
 
 gzip -9nf $RPM_BUILD_ROOT%{_mandir}/man*/* \
 	  AUTHORS README THANKS VIRTUALS doc/config.example
@@ -96,4 +96,4 @@ rm -rf $RPM_BUILD_ROOT
 %attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/security/blacklist.spop3d
 %attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/pam.d/spop3d
 %attr(755,root,root) %dir /var/mail/bulletins
-%attr(644,root,root) %{_mandir}/man[158]/*
+%{_mandir}/man[158]/*
