@@ -2,7 +2,7 @@ Summary:	POP3 server
 Summary(pl):	Serwer POP3
 Name:		solid-pop3d
 Version:	0.16d
-Release:	3
+Release:	4
 License:	GPL
 Group:		Networking/Daemons
 Group(de):	Netzwerkwesen/Server
@@ -24,6 +24,7 @@ Obsoletes:	qpopper6
 Obsoletes:	imap-pop
 Obsoletes:	solid-pop3d-ssl
 BuildRequires:	gdbm-devel
+BuildRequires:	openssl-devel >= 0.9.6a
 
 %define		_sysconfdir	/etc
 
