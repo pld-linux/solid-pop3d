@@ -53,6 +53,7 @@ LDFLAGS="-s"; export LDFLAGS
 	--enable-configfile \
 	--enable-userconfig \
 	--enable-last \
+	--enable-createmail \
 	--enable-ipv6
 make
 
