@@ -5,6 +5,7 @@ Version:	0.16d
 Release:	1
 License:	GPL
 Group:		Networking/Daemons
+Group(de):	Netzwerkwesen/Server
 Group(pl):	Sieciowe/Serwery
 Vendor:		Jerzy Balamut <jurekb@dione.ids.pl>
 URL:		http://solidpop3d.pld.org.pl/
@@ -49,7 +50,6 @@ konfigurowalny oraz posiada wsparcie dla wielu nowinek takich jak:
 
 %build
 autoconf
-LDFLAGS="-s"; export LDFLAGS
 %configure \
 	--localstatedir=/var/mail \
 	--enable-apop \
