@@ -11,7 +11,7 @@ Source0:	ftp://dione.ids.pl/pub/solidpop3d/%{name}-%{version}.tar.gz
 Source1:	%{name}.conf
 Source2:	%{name}.inetd
 Source3:	%{name}.pamd
-Buildroot:	/tmp/%{name}-%{version}-root
+BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Provides:	pop3daemon
 Obsoletes:	pop3daemon
 Obsoletes:	qpopper
