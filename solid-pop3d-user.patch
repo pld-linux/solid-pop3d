@@ -1,0 +1,11 @@
+--- solid-pop3d-0.16d/src/const.h.orig	Mon Apr 14 10:12:18 2003
++++ solid-pop3d-0.16d/src/const.h	Mon Apr 14 10:12:36 2003
+@@ -55,7 +55,7 @@
+ # define USERCFG ".spop3d"
+ # define USERBULL ".spop3d-bull"
+ # define USERSASL ".spop3d-sasl"
+-# define POPUSER "spop3d"
++# define POPUSER "pop3"
+ 
+ # define PER_SOURCE 5
+ # define MAX_SESSIONS 50
