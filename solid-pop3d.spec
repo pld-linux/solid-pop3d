@@ -21,20 +21,19 @@ Source4:	%{name}-ssl.inetd
 Source5:	%{name}.pamd
 Patch0:		%{name}-whoson2.patch
 Patch1:		%{name}-user.patch
+BuildRequires:	autoconf
+%{?!_without_sasl:BuildRequires:	cyrus-sasl-devel < 2.0.0 }
+BuildRequires:	gdbm-devel
+BuildRequires:	openssl-devel >= 0.9.7
+%{?_with_whoson:BuildRequires:	whoson-devel}
+PreReq:		rc-inetd >= 0.8.1
 Provides:	pop3daemon
-Prereq:		rc-inetd >= 0.8.1
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Obsoletes:	pop3daemon
 Obsoletes:	qpopper
 Obsoletes:	qpopper6
 Obsoletes:	imap-pop
 Obsoletes:	solid-pop3d-ssl
-BuildRequires:	gdbm-devel
-BuildRequires:	openssl-devel >= 0.9.7
-BuildRequires:	autoconf
-%{?!_without_sasl:BuildRequires:	cyrus-sasl-devel < 2.0.0 }
-%{?_with_whoson:BuildRequires:	whoson-devel}
-%define		_sysconfdir	/etc
 
 %description
 The Solid POP3 Server is an implementation of a Post Office Protocol
@@ -94,7 +93,8 @@ rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT%{_sysconfdir}/{pam.d,sysconfig/rc-inetd,security} \
 	$RPM_BUILD_ROOT/var/mail/bulletins
 
-%{__make} install DESTDIR=$RPM_BUILD_ROOT
+%{__make} install \
+	DESTDIR=$RPM_BUILD_ROOT
 
 install %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/spop3d.conf
 install %{SOURCE2} $RPM_BUILD_ROOT%{_sysconfdir}/spop3d-ssl.conf
@@ -134,7 +134,6 @@ fi
 if [ "$1" != "0" ]; then
 	%{_sbindir}/userdel spop3d
 fi
-
 
 %files
 %defattr(644,root,root,755)
