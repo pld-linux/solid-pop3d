@@ -94,27 +94,15 @@ gzip -9nf AUTHORS README THANKS VIRTUALS doc/config.example
 touch $RPM_BUILD_ROOT%{_sysconfdir}/security/blacklist.spop3d
 
 %pre
-if [ -z "`id -u spop3d 2>/dev/null`" ]; then
-	%{_sbindir}/useradd -u 70 -r -d /var/mail/bulletins -s /bin/false -c "Solid POP3 User" -g nobody spop3d 1>&2
-fi
+USER=spop3d; UID=70; GROUP=nobody; HOMEDIR=/var/mail/bulletins
+COMMENT="Solid POP3 User"; %useradd
 
 %post
-if [ -f /var/lock/subsys/rc-inetd ]; then
-	/etc/rc.d/init.d/rc-inetd reload 1>&2
-else
-	echo "Type \"/etc/rc.d/init.d/rc-inetd start\" to start inet sever" 1>&2
-fi
+%rc_inetd_post
 
 %postun
-if [ -f /var/lock/subsys/rc-inetd ]; then
-	/etc/rc.d/init.d/rc-inetd reload 1>&2
-fi
-
-if [ "$1" = "0" ]; then
-	if [ -n "`id -u spop3d 2>/dev/null`" ]; then
-		%{_sbindir}/userdel spop3d
-	fi
-fi
+%rc_inetd_postun
+USER=spop3d; %userdel
 
 %clean
 rm -rf $RPM_BUILD_ROOT
