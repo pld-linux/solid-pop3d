@@ -2,16 +2,21 @@ Summary:	POP3 server
 Summary(pl):	Serwer POP3
 Name:		solid-pop3d
 Version:	0.14
-Release:	1
+Release:	2
 License:	GPL
 Group:		Networking/Daemons
 Group(pl):	Sieciowe/Serwery
 Vendor:		Jerzy Balamut <jurekb@dione.ids.pl>
-Source:		ftp://dione.ids.pl/pub/solidpop3d/%{name}-%{version}.tar.gz
+Source0:	ftp://dione.ids.pl/pub/solidpop3d/%{name}-%{version}.tar.gz
 Source1:	%{name}.conf
 Source2:	%{name}.inetd
 Source3:	%{name}.pamd
 Buildroot:	/tmp/%{name}-%{version}-root
+Provides:	pop3daemon
+Obsoletes:	pop3daemon
+Obsoletes:	qpopper
+Obsoletes:	qpopper6
+Obsoletes:	imap-pop
 Prereq:		rc-inetd >= 0.8.1
 
 %define _sysconfdir	/etc
@@ -44,8 +49,8 @@ autoconf
 LDFLAGS="-s"; export LDFLAGS
 %configure \
 	--localstatedir=/var/mail \
-	--enable-pam \
 	--enable-apop \
+	--enable-pam \
 	--enable-mailbox \
 	--enable-maildir \
 	--enable-bulletins \
@@ -80,9 +85,22 @@ else
 	echo "Type \"/etc/rc.d/init.d/rc-inetd start\" to start inet sever" 1>&2
 fi
 
+if [ -z "`id -u spop3d 2>/dev/null`" ]; then
+	/usr/sbin/useradd -u 70 -r -d /var/mail/bulletins -s /bin/false -c "Solid POP3 User" -g nobody spop3d 1>&2
+	if [ -f /var/db/passwd.db ]; then
+		/usr/bin/update-db 1>&2
+	fi
+fi
+
 %postun
 if [ -f /var/lock/subsys/rc-inetd ]; then
 	/etc/rc.d/init.d/rc-inetd stop
+fi
+
+if [ "$1" = "0" ]; then
+	if [ -n "`id -u spop3d 2>/dev/null`" ]; then
+		/usr/sbin/userdel spop3d
+	fi
 fi
 
 %clean
@@ -96,6 +114,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/sysconfig/rc-inetd/spop3d
 %attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/security/blacklist.spop3d
 %attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/pam.d/spop3d
-%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/spop3d.conf
+%attr(640,spop3d,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/spop3d.conf
 %attr(755,root,root) %dir /var/mail/bulletins
 %{_mandir}/man[158]/*
