@@ -29,6 +29,7 @@ Obsoletes:	imap-pop
 Obsoletes:	solid-pop3d-ssl
 BuildRequires:	gdbm-devel
 BuildRequires:	openssl-devel >= 0.9.6a
+BuildRequires:	autoconf
 %{?_with_whoson:BuildRequires: whoson-devel}
 %define		_sysconfdir	/etc
 
@@ -100,6 +101,9 @@ gzip -9nf AUTHORS README THANKS VIRTUALS doc/config.example
 
 touch $RPM_BUILD_ROOT%{_sysconfdir}/security/blacklist.spop3d
 
+%clean
+rm -rf $RPM_BUILD_ROOT
+
 %pre
 if [ -z "`id -u spop3d 2>/dev/null`" ]; then
 	%{_sbindir}/useradd -u 70 -r -d /var/mail/bulletins -s /bin/false -c "Solid POP3 User" -g nobody spop3d 1>&2
@@ -122,9 +126,6 @@ if [ "$1" = "0" ]; then
 		%{_sbindir}/userdel spop3d
 	fi
 fi
-
-%clean
-rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
