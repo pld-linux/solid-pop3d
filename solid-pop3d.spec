@@ -23,6 +23,7 @@ Obsoletes:	qpopper
 Obsoletes:	qpopper6
 Obsoletes:	imap-pop
 Obsoletes:	solid-pop3d-ssl
+BuildRequires:	gdbm-devel
 
 %define		_sysconfdir	/etc
 
