@@ -51,7 +51,6 @@ konfigurowalny oraz posiada wsparcie dla wielu nowinek takich jak:
 %setup -q
 
 %build
-autoconf
 %configure \
 	--localstatedir=/var/mail \
 	--enable-apop \
@@ -81,13 +80,13 @@ rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT%{_sysconfdir}/{pam.d,sysconfig/rc-inetd,security} \
 	$RPM_BUILD_ROOT/var/mail/bulletins
 
+%{__make} install DESTDIR=$RPM_BUILD_ROOT 
+
 install %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/spop3d.conf
 install %{SOURCE2} $RPM_BUILD_ROOT%{_sysconfdir}/spop3d-ssl.conf
 install %{SOURCE3} $RPM_BUILD_ROOT%{_sysconfdir}/sysconfig/rc-inetd/spop3d
 install %{SOURCE4} $RPM_BUILD_ROOT%{_sysconfdir}/sysconfig/rc-inetd/spop3d-ssl
 install %{SOURCE5} $RPM_BUILD_ROOT%{_sysconfdir}/pam.d/spop3d
-
-%{__make} install DESTDIR=$RPM_BUILD_ROOT 
 
 gzip -9nf AUTHORS README THANKS VIRTUALS doc/config.example
 
