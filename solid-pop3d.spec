@@ -13,6 +13,7 @@ Group:		Networking/Daemons
 Vendor:		Jerzy Balamut <jurekb@dione.ids.pl>
 URL:		http://solidpop3d.pld.org.pl/
 Source0:	ftp://dione.ids.pl/pub/solidpop3d/%{name}-%{version}.tar.gz
+# Source0-md5:	ad197a3cf8310994f2fad90376edbd91
 Source1:	%{name}.conf
 Source2:	%{name}-ssl.conf
 Source3:	%{name}.inetd
