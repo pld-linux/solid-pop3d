@@ -110,7 +110,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %pre
 if [ -z "`id -u pop3 2>/dev/null`" ]; then
-	%{_sbindir}/useradd -u 60 -r -d /var/mail/bulletins -s /bin/false -c "pop3 user" -g nobody pop3 1>&2
+	/usr/sbin/useradd -u 60 -r -d /var/mail/bulletins -s /bin/false -c "pop3 user" -g nobody pop3 1>&2
 fi
 
 %post
@@ -127,13 +127,13 @@ fi
 
 if [ "$1" = "0" ]; then
 	if [ -n "`id -u pop3 2>/dev/null`" ]; then
-		%{_sbindir}/userdel pop3
+		/usr/sbin/userdel pop3
 	fi
 fi
 
 %triggerpostun -- solid-pop3d < 0.16d-8
 if [ "$1" != "0" ]; then
-	%{_sbindir}/userdel spop3d
+	/usr/sbin/userdel spop3d
 fi
 
 %files
