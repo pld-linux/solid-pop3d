@@ -5,4 +5,5 @@ PORT=995
 FLAGS=nowait
 USER=root
 SERVER=tcpd
+FAMILY=ipv4
 DAEMON=/usr/sbin/spop3d
