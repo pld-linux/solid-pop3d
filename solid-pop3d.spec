@@ -111,9 +111,7 @@ touch $RPM_BUILD_ROOT%{_sysconfdir}/security/blacklist.spop3d
 rm -rf $RPM_BUILD_ROOT
 
 %pre
-if [ -z "`id -u pop3 2>/dev/null`" ]; then
-	/usr/sbin/useradd -u 60 -r -d /var/mail/bulletins -s /bin/false -c "pop3 user" -g nobody pop3 1>&2
-fi
+%useradd -u 60 -r -d /var/mail/bulletins -s /bin/false -c "pop3 user" -g nobody pop3
 
 %post
 if [ -f /var/lock/subsys/rc-inetd ]; then
