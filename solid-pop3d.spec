@@ -8,7 +8,7 @@ Summary:	POP3 server
 Summary(pl):	Serwer POP3
 Name:		solid-pop3d
 Version:	0.16d
-Release:	11
+Release:	12
 License:	GPL
 Group:		Networking/Daemons
 Vendor:		Jerzy Balamut <jurekb@dione.ids.pl>
@@ -28,7 +28,7 @@ BuildRequires:	gdbm-devel
 BuildRequires:	rpmbuild(macros) >= 1.159
 %{?with_whoson:BuildRequires:	whoson-devel}
 PreReq:		rc-inetd >= 0.8.1
-Requires:	pam >= 0.77.3
+Requires:	pam >= 0.79.0
 Provides:	pop3daemon
 Provides:	user(pop3)
 Obsoletes:	imap-pop
