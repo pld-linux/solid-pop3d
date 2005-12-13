@@ -27,8 +27,8 @@ BuildRequires:	gdbm-devel
 %{?with_ssl:BuildRequires:	openssl-devel >= 0.9.7d}
 BuildRequires:	rpmbuild(macros) >= 1.159
 %{?with_whoson:BuildRequires:	whoson-devel}
-PreReq:		rc-inetd >= 0.8.1
 Requires:	pam >= 0.79.0
+Requires:	rc-inetd >= 0.8.1
 Provides:	pop3daemon
 Provides:	user(pop3)
 Obsoletes:	imap-pop
@@ -139,11 +139,11 @@ fi
 %doc AUTHORS README THANKS VIRTUALS doc/config.example
 %attr(755,root,root) %{_sbindir}/*
 %attr(755,root,root) %{_bindir}/*
-%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) /etc/sysconfig/rc-inetd/spop3d
-%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) /etc/sysconfig/rc-inetd/spop3d-ssl
-%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/security/blacklist.spop3d
-%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) /etc/pam.d/spop3d
-%attr(640,pop3,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/spop3d.conf
-%attr(640,pop3,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/spop3d-ssl.conf
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/sysconfig/rc-inetd/spop3d
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/sysconfig/rc-inetd/spop3d-ssl
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/security/blacklist.spop3d
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/pam.d/spop3d
+%attr(640,pop3,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/spop3d.conf
+%attr(640,pop3,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/spop3d-ssl.conf
 %attr(755,root,root) %dir /var/mail/bulletins
 %{_mandir}/man[158]/*
