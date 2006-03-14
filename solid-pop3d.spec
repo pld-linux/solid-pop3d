@@ -11,7 +11,6 @@ Version:	0.16d
 Release:	12
 License:	GPL
 Group:		Networking/Daemons
-Vendor:		Jerzy Balamut <jurekb@dione.ids.pl>
 Source0:	ftp://dione.ids.pl/pub/solidpop3d/%{name}-%{version}.tar.gz
 # Source0-md5:	ad197a3cf8310994f2fad90376edbd91
 Source1:	%{name}.conf
@@ -25,7 +24,7 @@ BuildRequires:	autoconf
 %{?with_sasl:BuildRequires:	cyrus-sasl-devel < 2.0.0}
 BuildRequires:	gdbm-devel
 %{?with_ssl:BuildRequires:	openssl-devel >= 0.9.7d}
-BuildRequires:	rpmbuild(macros) >= 1.159
+BuildRequires:	rpmbuild(macros) >= 1.268
 %{?with_whoson:BuildRequires:	whoson-devel}
 Requires:	pam >= 0.79.0
 Requires:	rc-inetd >= 0.8.1
@@ -114,18 +113,11 @@ rm -rf $RPM_BUILD_ROOT
 %useradd -u 60 -r -d /var/mail/bulletins -s /bin/false -c "pop3 user" -g nobody pop3
 
 %post
-if [ -f /var/lock/subsys/rc-inetd ]; then
-	/etc/rc.d/init.d/rc-inetd reload 1>&2
-else
-	echo "Type \"/etc/rc.d/init.d/rc-inetd start\" to start inet server" 1>&2
-fi
+%service -q rc-inetd reload
 
 %postun
-if [ -f /var/lock/subsys/rc-inetd ]; then
-	/etc/rc.d/init.d/rc-inetd reload 1>&2
-fi
-
-if [ "$1" = "0" ]; then
+if [ "$1" = 0 ]; then
+	%service -q rc-inetd reload
 	%userremove pop3
 fi
 
