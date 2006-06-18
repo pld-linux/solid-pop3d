@@ -8,7 +8,7 @@ Summary:	POP3 server
 Summary(pl):	Serwer POP3
 Name:		solid-pop3d
 Version:	0.16d
-Release:	12
+Release:	13
 License:	GPL
 Group:		Networking/Daemons
 Source0:	ftp://dione.ids.pl/pub/solidpop3d/%{name}-%{version}.tar.gz
@@ -31,7 +31,6 @@ Requires:	rc-inetd >= 0.8.1
 Provides:	pop3daemon
 Provides:	user(pop3)
 Obsoletes:	imap-pop
-Obsoletes:	pop3daemon
 Obsoletes:	qpopper
 Obsoletes:	qpopper6
 Obsoletes:	solid-pop3d-ssl
