@@ -21,6 +21,7 @@ Source5:	%{name}.pamd
 Patch0:		%{name}-whoson2.patch
 Patch1:		%{name}-user.patch
 BuildRequires:	autoconf
+BuildRequires:	automake
 %{?with_sasl:BuildRequires:	cyrus-sasl-devel < 2.0.0}
 BuildRequires:	gdbm-devel
 %{?with_ssl:BuildRequires:	openssl-devel >= 0.9.7d}
@@ -58,6 +59,7 @@ konfigurowalny oraz posiada wsparcie dla wielu nowinek takich jak:
 
 %prep
 %setup -q
+cp -f /usr/share/automake/config.sub .
 %{?with_whoson:%patch0 -p1}
 %patch1 -p1
 
