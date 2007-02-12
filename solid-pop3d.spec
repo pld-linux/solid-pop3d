@@ -5,7 +5,7 @@
 %bcond_without	ssl	# build without SSL support
 #
 Summary:	POP3 server
-Summary(pl.UTF-8):   Serwer POP3
+Summary(pl.UTF-8):	Serwer POP3
 Name:		solid-pop3d
 Version:	0.16d
 Release:	13
