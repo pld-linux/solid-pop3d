@@ -5,7 +5,7 @@
 %bcond_without	ssl	# build without SSL support
 #
 Summary:	POP3 server
-Summary(pl):	Serwer POP3
+Summary(pl.UTF-8):   Serwer POP3
 Name:		solid-pop3d
 Version:	0.16d
 Release:	13
@@ -47,15 +47,15 @@ easily configurable and has support for few features such as:
 - bulletins
 - expiration of messages
 
-%description -l pl
-Serwer Solid POP3 jest implementacj± protoko³u Post Office Protocol w
-wersji 3 maj±cy za g³ówny cel elastyczno¶æ. Serwer jest ³atwo
+%description -l pl.UTF-8
+Serwer Solid POP3 jest implementacjÄ… protokoÅ‚u Post Office Protocol w
+wersji 3 majÄ…cy za gÅ‚Ã³wny cel elastycznoÅ›Ä‡. Serwer jest Å‚atwo
 konfigurowalny oraz posiada wsparcie dla wielu nowinek takich jak:
 - schemat autoryzacji APOP
 - wirtualne serwery
 - formaty maildir oraz mailbox skrzynek pocztowych
-- obs³uga biuletynów
-- obs³uga przeterminowywania siê wiadomo¶ci
+- obsÅ‚uga biuletynÃ³w
+- obsÅ‚uga przeterminowywania siÄ™ wiadomoÅ›ci
 
 %prep
 %setup -q
