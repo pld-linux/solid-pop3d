@@ -1,14 +1,18 @@
 #
 # Conditional build:
-%bcond_with	whoson	# build with whoson support
+%bcond_without	apop	# build without APOP support
+%bcond_without	ipv6	# build without IPv6 support
+%bcond_without	maildir	# build without Maildir support
 %bcond_with	sasl	# build with SASL support (uses obsolete cyrus-sasl 1.x)
 %bcond_without	ssl	# build without SSL support
+%bcond_with	standalone	# compile server as a standalone server, not inetd
+%bcond_with	whoson	# build with whoson support
 #
 Summary:	POP3 server
 Summary(pl.UTF-8):	Serwer POP3
 Name:		solid-pop3d
 Version:	0.16d
-Release:	13
+Release:	14
 License:	GPL
 Group:		Networking/Daemons
 Source0:	ftp://dione.ids.pl/pub/solidpop3d/%{name}-%{version}.tar.gz
@@ -28,7 +32,7 @@ BuildRequires:	gdbm-devel
 BuildRequires:	rpmbuild(macros) >= 1.268
 %{?with_whoson:BuildRequires:	whoson-devel}
 Requires:	pam >= 0.79.0
-Requires:	rc-inetd >= 0.8.1
+%{?with_standalone:Requires:	rc-inetd >= 0.8.1}
 Provides:	pop3daemon
 Provides:	user(pop3)
 Obsoletes:	imap-pop
@@ -68,23 +72,29 @@ cp -f /usr/share/automake/config.sub .
 %{__autoconf}
 %configure \
 	--localstatedir=/var/mail \
-	--enable-apop \
 	--enable-pam \
+	%{?with_apop:--enable-apop} \
 	--enable-mailbox \
-	--enable-maildir \
+	%{!?with_maildir:--disable-maildir} \
+	--disable-crlfmaildir \
 	--enable-bulletins \
 	--enable-expire \
 	--enable-configfile \
 	--enable-userconfig \
+	%{?with_standalone:--enable-standalone} \
 	--enable-last \
-	--enable-createmail \
-	--enable-ipv6 \
 	--enable-mapping \
 	--enable-nonip \
+	--disable-allowroot \
+	--enable-createmail \
+	%{?with_ipv6:--enable-ipv6} \
+	--disable-resolve \
+	--disable-connect \
+	--enable-logextend \
 	--enable-statistics \
 	--enable-dpuid \
-	--enable-logextend \
 	--enable-userpasswd \
+	--enable-hashspool \
 	--enable-authonly \
 	%{?with_ssl:--with-openssl} \
 	%{?with_whoson:--enable-whoson} \
@@ -93,7 +103,7 @@ cp -f /usr/share/automake/config.sub .
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT%{_sysconfdir}/{pam.d,sysconfig/rc-inetd,security} \
+install -d $RPM_BUILD_ROOT%{_sysconfdir}/{pam.d,%{!?with_standalone:sysconfig/rc-inetd,}security} \
 	$RPM_BUILD_ROOT/var/mail/bulletins
 
 %{__make} install \
@@ -101,8 +111,8 @@ install -d $RPM_BUILD_ROOT%{_sysconfdir}/{pam.d,sysconfig/rc-inetd,security} \
 
 install %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/spop3d.conf
 install %{SOURCE2} $RPM_BUILD_ROOT%{_sysconfdir}/spop3d-ssl.conf
-install %{SOURCE3} $RPM_BUILD_ROOT/etc/sysconfig/rc-inetd/spop3d
-install %{SOURCE4} $RPM_BUILD_ROOT/etc/sysconfig/rc-inetd/spop3d-ssl
+%{!?with_standalone:install %{SOURCE3} $RPM_BUILD_ROOT/etc/sysconfig/rc-inetd/spop3d}
+%{!?with_standalone:install %{SOURCE4} $RPM_BUILD_ROOT/etc/sysconfig/rc-inetd/spop3d-ssl}
 install %{SOURCE5} $RPM_BUILD_ROOT/etc/pam.d/spop3d
 
 touch $RPM_BUILD_ROOT%{_sysconfdir}/security/blacklist.spop3d
@@ -114,11 +124,11 @@ rm -rf $RPM_BUILD_ROOT
 %useradd -u 60 -r -d /var/mail/bulletins -s /bin/false -c "pop3 user" -g nobody pop3
 
 %post
-%service -q rc-inetd reload
+%{!?with_standalone:%service -q rc-inetd reload}
 
 %postun
 if [ "$1" = 0 ]; then
-	%service -q rc-inetd reload
+	%{!?with_standalone:%service -q rc-inetd reload}
 	%userremove pop3
 fi
 
@@ -129,11 +139,11 @@ fi
 
 %files
 %defattr(644,root,root,755)
-%doc AUTHORS README THANKS VIRTUALS doc/config.example
+%doc AUTHORS ChangeLog README SASL THANKS TLS VIRTUALS doc/config.example
 %attr(755,root,root) %{_sbindir}/*
 %attr(755,root,root) %{_bindir}/*
-%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/sysconfig/rc-inetd/spop3d
-%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/sysconfig/rc-inetd/spop3d-ssl
+%{!?with_standalone:%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/sysconfig/rc-inetd/spop3d}
+%{!?with_standalone:%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/sysconfig/rc-inetd/spop3d-ssl}
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/security/blacklist.spop3d
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/pam.d/spop3d
 %attr(640,pop3,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/spop3d.conf
