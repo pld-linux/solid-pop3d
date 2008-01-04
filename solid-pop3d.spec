@@ -1,12 +1,12 @@
 #
 # Conditional build:
-%bcond_without	apop	# build without APOP support
-%bcond_without	ipv6	# build without IPv6 support
-%bcond_without	maildir	# build without Maildir support
-%bcond_with	sasl	# build with SASL support (uses obsolete cyrus-sasl 1.x)
-%bcond_without	ssl	# build without SSL support
+%bcond_without	apop		# build without APOP support
+%bcond_without	ipv6		# build without IPv6 support
+%bcond_without	maildir		# build without Maildir support
+%bcond_with	sasl		# build with SASL support (uses obsolete cyrus-sasl 1.x)
+%bcond_without	ssl		# build without SSL support
 %bcond_with	standalone	# compile server as a standalone server, not inetd
-%bcond_with	whoson	# build with whoson support
+%bcond_with	whoson		# build with whoson support
 #
 Summary:	POP3 server
 Summary(pl.UTF-8):	Serwer POP3
@@ -32,7 +32,7 @@ BuildRequires:	gdbm-devel
 BuildRequires:	rpmbuild(macros) >= 1.268
 %{?with_whoson:BuildRequires:	whoson-devel}
 Requires:	pam >= 0.79.0
-%{?with_standalone:Requires:	rc-inetd >= 0.8.1}
+%{!?with_standalone:Requires:	rc-inetd >= 0.8.1}
 Provides:	pop3daemon
 Provides:	user(pop3)
 Obsoletes:	imap-pop
@@ -103,7 +103,7 @@ cp -f /usr/share/automake/config.sub .
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT%{_sysconfdir}/{pam.d,%{!?with_standalone:sysconfig/rc-inetd,}security} \
+install -d $RPM_BUILD_ROOT/etc/{pam.d,security%{!?with_standalone:,sysconfig/rc-inetd}} \
 	$RPM_BUILD_ROOT/var/mail/bulletins
 
 %{__make} install \
