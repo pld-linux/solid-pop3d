@@ -8,7 +8,7 @@ Summary:	POP3 server
 Summary(pl.UTF-8):	Serwer POP3
 Name:		solid-pop3d
 Version:	0.16d
-Release:	13
+Release:	14
 License:	GPL
 Group:		Networking/Daemons
 Source0:	ftp://dione.ids.pl/pub/solidpop3d/%{name}-%{version}.tar.gz
@@ -60,6 +60,7 @@ konfigurowalny oraz posiada wsparcie dla wielu nowinek takich jak:
 
 %prep
 %setup -q
+cp -f /usr/share/automake/config.sub .
 %{?with_whoson:%patch0 -p1}
 %patch1 -p1
 %patch2 -p1
