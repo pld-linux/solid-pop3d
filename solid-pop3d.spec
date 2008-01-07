@@ -5,13 +5,12 @@
 %bcond_without	ssl	# build without SSL support
 #
 Summary:	POP3 server
-Summary(pl):	Serwer POP3
+Summary(pl.UTF8):	Serwer POP3
 Name:		solid-pop3d
 Version:	0.16d
-Release:	12
+Release:	13
 License:	GPL
 Group:		Networking/Daemons
-Vendor:		Jerzy Balamut <jurekb@dione.ids.pl>
 Source0:	ftp://dione.ids.pl/pub/solidpop3d/%{name}-%{version}.tar.gz
 # Source0-md5:	ad197a3cf8310994f2fad90376edbd91
 Source1:	%{name}.conf
@@ -21,7 +20,9 @@ Source4:	%{name}-ssl.inetd
 Source5:	%{name}.pamd
 Patch0:		%{name}-whoson2.patch
 Patch1:		%{name}-user.patch
+Patch2:		%{name}-facility_mail.patch
 BuildRequires:	autoconf
+BuildRequires:	automake
 %{?with_sasl:BuildRequires:	cyrus-sasl-devel < 2.0.0}
 BuildRequires:	gdbm-devel
 %{?with_ssl:BuildRequires:	openssl-devel >= 0.9.7d}
@@ -32,7 +33,6 @@ Requires:	pam >= 0.79.0
 Provides:	pop3daemon
 Provides:	user(pop3)
 Obsoletes:	imap-pop
-Obsoletes:	pop3daemon
 Obsoletes:	qpopper
 Obsoletes:	qpopper6
 Obsoletes:	solid-pop3d-ssl
@@ -62,6 +62,7 @@ konfigurowalny oraz posiada wsparcie dla wielu nowinek takich jak:
 %setup -q
 %{?with_whoson:%patch0 -p1}
 %patch1 -p1
+%patch2 -p1
 
 %build
 %{__autoheader}
@@ -114,18 +115,11 @@ rm -rf $RPM_BUILD_ROOT
 %useradd -u 60 -r -d /var/mail/bulletins -s /bin/false -c "pop3 user" -g nobody pop3
 
 %post
-if [ -f /var/lock/subsys/rc-inetd ]; then
-	/etc/rc.d/init.d/rc-inetd reload 1>&2
-else
-	echo "Type \"/etc/rc.d/init.d/rc-inetd start\" to start inet server" 1>&2
-fi
+%service -q rc-inetd reload
 
 %postun
-if [ -f /var/lock/subsys/rc-inetd ]; then
-	/etc/rc.d/init.d/rc-inetd reload 1>&2
-fi
-
-if [ "$1" = "0" ]; then
+if [ "$1" = 0 ]; then
+	%service -q rc-inetd reload
 	%userremove pop3
 fi
 
@@ -136,7 +130,7 @@ fi
 
 %files
 %defattr(644,root,root,755)
-%doc AUTHORS README THANKS VIRTUALS doc/config.example
+%doc AUTHORS ChangeLog README SASL THANKS TLS VIRTUALS doc/config.example
 %attr(755,root,root) %{_sbindir}/*
 %attr(755,root,root) %{_bindir}/*
 %attr(640,root,root) %config(noreplace) %verify(not size mtime md5) /etc/sysconfig/rc-inetd/spop3d
