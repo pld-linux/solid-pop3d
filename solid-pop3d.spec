@@ -9,7 +9,7 @@
 %bcond_with	whoson		# build with whoson support
 #
 Summary:	POP3 server
-Summary(pl.UTF8):	Serwer POP3
+Summary(pl.UTF-8):	Serwer POP3
 Name:		solid-pop3d
 Version:	0.16d
 Release:	15
