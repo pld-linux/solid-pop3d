@@ -1,0 +1,11 @@
+--- ./src/const.h.org	2008-01-07 11:59:54.000000000 +0100
++++ ./src/const.h	2008-01-07 12:02:55.000000000 +0100
+@@ -65,7 +65,7 @@
+ 
+ # define POP_IDENT "spop3d"
+ # define POP_PRIORITY LOG_NOTICE
+-# define POP_FACILITY LOG_DAEMON
++# define POP_FACILITY LOG_MAIL
+ 
+ # define PASSWORDLN 35
+ # define SASLSECRETLN 1024
