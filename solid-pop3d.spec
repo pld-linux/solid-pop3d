@@ -14,7 +14,7 @@ Name:		solid-pop3d
 Version:	0.16d
 Release:	15
 License:	GPL
-Group:		Networking/Daemons
+Group:		Networking/Daemons/POP3
 Source0:	ftp://dione.ids.pl/pub/solidpop3d/%{name}-%{version}.tar.gz
 # Source0-md5:	ad197a3cf8310994f2fad90376edbd91
 Source1:	%{name}.conf
