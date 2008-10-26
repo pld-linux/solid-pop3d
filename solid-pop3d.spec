@@ -37,6 +37,7 @@ Requires:	pam >= 0.79.0
 Provides:	pop3daemon
 Provides:	user(pop3)
 Obsoletes:	imap-pop
+Obsoletes:	pop3daemon
 Obsoletes:	qpopper
 Obsoletes:	qpopper6
 Obsoletes:	solid-pop3d-ssl
