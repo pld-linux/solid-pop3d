@@ -12,7 +12,7 @@ Summary:	POP3 server
 Summary(pl.UTF-8):	Serwer POP3
 Name:		solid-pop3d
 Version:	0.16d
-Release:	15
+Release:	16
 License:	GPL
 Group:		Networking/Daemons/POP3
 Source0:	ftp://dione.ids.pl/pub/solidpop3d/%{name}-%{version}.tar.gz
