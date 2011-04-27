@@ -1,0 +1,14 @@
+diff -Naur solid-pop3d-0.16d/src/sptls.c solid-pop3d-0.16d-p/src/sptls.c
+--- solid-pop3d-0.16d/src/sptls.c	2000-09-13 23:03:17.000000000 +0200
++++ solid-pop3d-0.16d-p/src/sptls.c	2011-04-27 15:59:32.000000000 +0200
+@@ -272,8 +272,8 @@
+ 
+ int set_cert_stuff(char *acertfile, char *akeyfile) {
+ 	if (acertfile[0]) {
+-		if (SSL_CTX_use_certificate_file(tls_ctx, acertfile,
+-			SSL_FILETYPE_PEM) <= 0) {
++		if (SSL_CTX_use_certificate_chain_file(
++			tls_ctx, acertfile) <= 0) {
+ 			pop_log(pop_priority, "sptls: unable to get "
+ 				"certificate: %.1024s", acertfile);
+ 			tls_print_errors();
