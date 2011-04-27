@@ -12,7 +12,7 @@ Summary:	POP3 server
 Summary(pl.UTF-8):	Serwer POP3
 Name:		solid-pop3d
 Version:	0.16d
-Release:	16
+Release:	17
 License:	GPL
 Group:		Networking/Daemons/POP3
 Source0:	ftp://dione.ids.pl/pub/solidpop3d/%{name}-%{version}.tar.gz
@@ -25,6 +25,7 @@ Source5:	%{name}.pamd
 Patch0:		%{name}-whoson2.patch
 Patch1:		%{name}-user.patch
 Patch2:		%{name}-facility_mail.patch
+Patch3:		%{name}-certificate-chain.patch
 BuildRequires:	autoconf
 BuildRequires:	automake
 %{?with_sasl:BuildRequires:	cyrus-sasl-devel < 2.0.0}
@@ -69,6 +70,7 @@ cp -f /usr/share/automake/config.sub .
 %{?with_whoson:%patch0 -p1}
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 %build
 %{__autoheader}
